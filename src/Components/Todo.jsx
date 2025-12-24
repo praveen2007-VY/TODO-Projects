@@ -8,9 +8,11 @@ const Todo = () => {
 
 
     const [todo,settodo]=useState([]);
+    
+    const API = "https://todo-backend-mdho.vercel.app";
 
     const fetchtodo = async ()=>{
-       const res= await axios.get("http://localhost:5000/todo");
+       const res= await axios.get(`${API}/todo`);
        settodo(res.data);
 
     }
@@ -19,8 +21,9 @@ const Todo = () => {
         fetchtodo();
     },[])
 
-   const [title,sett]= useState();
-   const [description,setd]= useState();
+   const [title, sett] = useState("");
+const [description, setd] = useState("");
+
 
    const handlsub = async(e)=>{
     e.preventDefault();
@@ -33,7 +36,8 @@ const Todo = () => {
         description
     };
 
-    const res = await axios.post("http://localhost:5000/todo",data);
+    const res = await axios.post(`${API}/todo`, data);
+
     console.log(res);
     toast.success("Todo added successfully");
     fetchtodo();
@@ -44,7 +48,7 @@ const Todo = () => {
     
 
    const handleDelete = async(id)=>{
-      const res = await axios.delete(`http://localhost:5000/todo/${id}`);
+      const res = await axios.delete(`${API}/todo/${id}`);
       fetchtodo();
       toast.success("Todo deleted successfully");
 
@@ -54,7 +58,8 @@ const Todo = () => {
     const data = { completed: !t.completed }
     console.log(data);
     
-     const res = await axios.put(`http://localhost:5000/todo/${t._id}`,data);
+     const res = await axios.put(`${API}/todo/${t._id}`, data);
+
      if(t.completed==false){
         toast.success("Completed the Work Successfully");
      }
